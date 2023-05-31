@@ -1,0 +1,69 @@
+==========SCRIPTS==========
+---------------------------------------------------
+CREATE DATABASE super;
+CREATE TABLE produtos( idProduto INT(4) AUTO_INCREMENT PRIMARY KEY, nomeProduto
+VARCHAR(200), valorProduto DOUBLE (9,2), quantidadeProduto INT(7) );
+//
+
+INSERT INTO PRODUTOS(nomeProduto, valorProduto, quantidadeProduto) values
+('Arroz', 2.5*1,2,200);
+INSERT INTO PRODUTOS(nomeProduto, valorProduto, quantidadeProduto) values
+('Feijão', 3.69*1,2,250);
+INSERT INTO PRODUTOS(nomeProduto, valorProduto, quantidadeProduto) values
+('Farinha', 2.19*1,2,500);
+INSERT INTO PRODUTOS(nomeProduto, valorProduto, quantidadeProduto) values ('Açúcar',
+2.39*1,2,100);
+INSERT INTO PRODUTOS(nomeProduto, valorProduto, quantidadeProduto, setor) values
+('Óleo de soja', 2.99*1,2,300);
+INSERT INTO PRODUTOS(nomeProduto, valorProduto, quantidadeProduto) values
+('Feijão', 3.69*1,2,250);
+//
+
+CREATE TABLE funcionarios (idFuncionario INT AUTO_INCREMENT PRIMARY KEY,
+nomeFuncionario VARCHAR (200), setorFuncionario VARCHAR (80) );
+SELECT*FROM candidatos WHERE (experiencia='Atendente de padaria' OR
+experiencia='Atendente de caixa' OR experiencia='Repositor');
+INSERT INTO funcionarios (nomeFuncionario, SetorFuncionario) VALUES ('Amanda
+Carvalho','Atendente de caixa');
+INSERT INTO funcionarios (nomeFuncionario, setorFuncionario) VALUES ('Clóvis
+Nogueira','Atendente de Padaria');
+INSERT INTO funcionarios (nomeFuncionario, setorFuncionario)
+VALUES ('Adamastor Junior','Repositor');
+//
+ALTER TABLE funcionarios ADD CPF VARCHAR(11);
+UPDATE funcionarios SET CPF=00235656565 WHERE idFuncionario=1;
+UPDATE funcionarios SET CPF=33256987525 WHERE idFuncionario=2;
+UPDATE funcionarios SET CPF=45061690935 WHERE idFuncionario=3;
+//
+
+CREATE TABLE venda
+(
+    idVenda INT AUTO_INCREMENT,
+    valorTotalVenda DOUBLE,
+    idConsumidor INT,
+    PRIMARY KEY (idVenda),
+    FOREIGN KEY(idConsumidor)REFERENCES consumidor(idConsumidor)
+);
+CREATE TABLE consumidor
+(
+    idConsumidor INT AUTO_INCREMENT PRIMARY KEY,
+    tipoConsumidor VARCHAR (80)
+);
+CREATE TABLE  itens_vendidos(
+	idVenda INT,
+   	idProduto INT,
+	quantidadeVendida INT,
+	valorProduto DOUBLE,
+	valorTotalProduto DOUBLE,
+  	FOREIGN KEY (idVenda) REFERENCES venda(idVenda),
+	FOREIGN KEY (idProduto) REFERENCES Produtos(idProduto),
+	PRIMARY KEY (idVenda, idProduto)
+)
+INSERT INTO consumidor(idConsumidor) VALUES ("Consumidor Final");
+INSERT INTO venda(idConsumidor,valorTotalVenda) VALUES (1,3*4);
+INSERT INTO itens_vendidos(idVenda,idProduto,quantidadeVendida,valorProduto,valorTotalProduto) VALUES (1,3,4,3,3*4);
+
+INSERT INTO consumidor(idConsumidor) VALUES ("Bruno");
+INSERT INTO venda(idConsumidor,valorTotalVenda) VALUES (2,6*4.43);
+INSERT INTO itens_vendidos(idVenda,idProduto,quantidadeVendida,valorProduto,valorTotalProduto) VALUES (2,4,6,4.43,6*4.43);
+SELECT SUM(valorTotalProduto)FROM itens_vendidos;
